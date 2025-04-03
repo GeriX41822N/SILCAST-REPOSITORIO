@@ -1,61 +1,35 @@
 <div class="gallery-container">
-    <section class="gallery-section">
-        <h2>Grúas</h2>
-        <div class="image-grid">
-          <div class="image-item">
-            <img src="/assets/images/gruas/imagen1.jpg" alt="Imagen 1 Grúas">
+  <section class="gallery-section" *ngFor="let section of galleryData">
+      <h2>{{ section.title }}</h2>
+      <p>{{ section.description }}</p>
+      <div class="image-grid">
+          <div class="image-item" *ngFor="let image of section.images; let i = index" (click)="openCarousel(section.key, i)">
+              <img [src]="image.url" [alt]="image.alt">
           </div>
-          <div class="image-item">
-            <img src="/assets/images/gruas/imagen2.jpg" alt="Imagen 2 Grúas">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/gruas/imagen3.jpg" alt="Imagen 3 Grúas">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/gruas/imagen4.jpg" alt="Imagen 4 Grúas">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/gruas/imagen5.jpg" alt="Imagen 5 Grúas">
-          </div>
-          </div>
-      </section>
-      <section class="gallery-section">
-        <h2>Servicios Industriales</h2>
-        <div class="image-grid">
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen1.jpg" alt="Imagen 1 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen2.jpg" alt="Imagen 2 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen3.jpg" alt="Imagen 3 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen4.jpg" alt="Imagen 4 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen5.jpg" alt="Imagen 5 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen6.jpg" alt="Imagen 6 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen7.jpg" alt="Imagen 7 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen8.jpg" alt="Imagen 8 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen9.jpg" alt="Imagen 9 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen10.jpg" alt="Imagen 10 Servicios Industriales">
-          </div>
-          <div class="image-item">
-            <img src="/assets/images/industriales/imagen11.jpg" alt="Imagen 11 Servicios Industriales">
-          </div>
+      </div>
+
+      <div class="carousel-overlay" *ngIf="selectedSection === section.key && showCarousel">
+        <div class="carousel-modal">
+            <button class="close-button" (click)="closeCarousel()">X</button>
+            <button class="prev-button" (click)="prevImage()" *ngIf="section.images.length > 1">
+                <span class="arrow-left"></span> Anterior
+            </button>
+            <img [src]="section.images[currentImageIndex]?.url" [alt]="section.images[currentImageIndex]?.alt">
+            <button class="next-button" (click)="nextImage()" *ngIf="section.images.length > 1">
+                Siguiente <span class="arrow-right"></span>
+            </button>
         </div>
-      </section>
-    
-  </div>
+    </div>
+
+  </section>
+
+  <section class="admin-section">
+      <h2>Administración de Galería</h2>
+      <div *ngFor="let section of galleryData">
+          <h3>{{ section.title }}</h3>
+          <input type="file" multiple (change)="uploadImages($event, section.key)">
+          <p>Selecciona imágenes para agregar a la sección de {{ section.title }}.</p>
+      </div>
+      <button (click)="saveGalleryData()">Guardar Cambios</button>
+  </section>
+</div>
