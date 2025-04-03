@@ -1,0 +1,91 @@
+/* header.component.scss - Con la paleta de colores personalizada */
+
+// --- Tu Paleta de Colores ---
+$primary-color: #f6853c;     // Naranja principal
+$secondary-color: #ff4500;    // Naranja/Rojo secundario (no usado directamente aquí, pero disponible)
+$header-background: #1e2d3b; // Fondo oscuro azul/gris
+$white: #fff;               // Blanco
+
+// --- Variables de configuración (Usando tu paleta) ---
+$text-color: $white;                      // Texto principal será blanco
+$highlight-color: $primary-color;         // Usaremos el naranja principal para resaltar en hover/active
+$hover-bg-color: rgba($white, 0.08);      // Mantenemos un fondo blanco muy sutil para hover, ajustado para contraste
+$active-bg-color: rgba($highlight-color, 0.15); // Fondo naranja (del highlight) muy tenue para activo
+$transition-speed: 0.3s;
+$hover-lift: -2px;
+
+// --- Estilos ---
+header {
+  // Aplicar el color de fondo definido
+  background-color: $header-background;
+  padding: 10px 0;
+  // La sombra puede depender del fondo, esta podría funcionar bien con el fondo oscuro
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    .logo-img {
+      max-height: 50px;
+      display: block;
+      // Si tu logo necesita ajustarse al nuevo fondo, hazlo aquí
+    }
+
+    nav {
+      .nav-cards {
+        display: flex;
+        gap: 10px; // Espacio entre botones
+
+        .nav-card {
+          // Aplicar color de texto base
+          color: $text-color;
+          text-decoration: none;
+          padding: 10px 18px;
+          font-family: Arial, sans-serif;
+          font-weight: bold;
+          text-transform: uppercase;
+          display: flex;
+          align-items: center;
+          border-radius: 5px;
+          position: relative;
+          cursor: pointer;
+
+          transition: color $transition-speed ease,
+                      background-color $transition-speed ease,
+                      transform 0.2s ease,
+                      box-shadow $transition-speed ease;
+
+          i {
+            display: none; // Iconos siguen ocultos
+          }
+
+          // --- Estilos al pasar el cursor (Hover) ---
+          &:hover {
+            // Aplicar color de resaltado para el texto
+            color: $highlight-color;
+            // Aplicar fondo sutil para hover
+            background-color: $hover-bg-color;
+            transform: translateY($hover-lift);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // Sombra puede requerir ajuste según el fondo
+          }
+
+          // --- Estilos para el enlace activo ---
+          &.active {
+            // Aplicar color de resaltado para el texto activo
+            color: $highlight-color;
+            // Aplicar fondo tenue de resaltado para el activo
+            background-color: $active-bg-color;
+            // Podrías querer quitar o modificar el transform/shadow para el estado activo
+            // transform: translateY(0);
+            // box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.admin-page {
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    padding: 30px;
+    background: linear-gradient(135deg, #1e1e2e 0%, #12121b 100%);
+    min-height: 100vh;
+    text-align: center;
+
+    h1 {
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        color: #00d4ff;
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+    }
+
+    section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+        }
+    }
+
+    .services-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .card {
+        width: 250px;
+        padding: 20px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        button {
+            background: #00d4ff;
+            color: #1e1e2e;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+
+        button:hover {
+            background: #0088cc;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 1);
+            transform: scale(1.05);
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .services-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+}

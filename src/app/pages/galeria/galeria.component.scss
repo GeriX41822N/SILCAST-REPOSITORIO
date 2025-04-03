@@ -1,0 +1,68 @@
+.gallery-container {
+    padding: 20px; // Espacio alrededor del contenedor principal
+  
+    // Estilos para pantallas más grandes
+    @media (min-width: 768px) {
+      padding: 30px;
+    }
+  
+    // Estilos para pantallas aún más grandes
+    @media (min-width: 1200px) {
+      padding: 40px;
+    }
+  }
+  
+  .gallery-section {
+    margin-bottom: 40px; // Mayor espacio entre las secciones
+    border-bottom: 1px solid #eee; // Línea divisoria sutil
+    padding-bottom: 30px;
+  
+    // Elimina el borde inferior de la última sección
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  
+    h2 {
+      font-size: 1.8em; // Tamaño de fuente para el título de la sección
+      color: #333; // Color del texto del título
+      margin-bottom: 20px; // Espacio debajo del título
+      text-align: center; // Centra el título
+    }
+  }
+  
+  .image-grid {
+    display: grid; // Utiliza CSS Grid para el diseño
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Crea columnas que se ajustan automáticamente con un ancho mínimo de 250px */
+    gap: 20px; // Espacio entre las imágenes (tanto horizontal como vertical)
+    margin-top: 20px;
+  
+    // Estilos para pantallas más grandes para tener más columnas
+    @media (min-width: 992px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+  }
+  
+  .image-item {
+    border-radius: 8px; // Bordes redondeados para las imágenes
+    overflow: hidden; // Asegura que la imagen no se salga del borde redondeado
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); // Sombra suave para dar profundidad
+    transition: transform 0.3s ease-in-out; // Transición suave para el efecto hover
+  
+    // Establecemos una altura fija para el contenedor de la imagen
+    height: 300px; /* Ajusta este valor según sea necesario, 300px es un ejemplo */
+  
+    &:hover {
+      transform: scale(1.05); // Ligeramente más grande al pasar el ratón
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12); // Sombra más pronunciada en hover
+    }
+  
+    img {
+      width: 100%; // La imagen ocupa todo el ancho del contenedor
+      height: 100%; // La imagen ocupa toda la altura del contenedor
+      display: block; // Evita espacios extra debajo de la imagen
+      object-fit: cover; /* Esto es clave: la imagen se ajustará para cubrir el contenedor, recortando si es necesario */
+    }
+  }

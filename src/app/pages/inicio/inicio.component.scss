@@ -1,0 +1,196 @@
+@use 'sass:color';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+// 🎨 Variables de colores
+$primary-color: #f6853c;   // Naranja para los textos
+$secondary-color: #ff4500; // Naranja más fuerte para efectos hover
+$background-color: #f8f9fa;
+$header-background: #1e2d3b; // Fondo azul del header (Nota: Este parece ser para el header general, ¿debería estar en un archivo global?)
+$dark-color: #333;
+$white: #fff;
+
+// 📐 Espaciamiento y breakpoints (para diseño responsivo)
+$spacer: 1rem;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 992px;
+
+// 🖋️ Tipografía y estilos globales (algunos pueden moverse a un archivo global si son compartidos)
+body {
+  background-color: $background-color;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  color: $dark-color;
+  line-height: 1.6; // Mejora la legibilidad
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: $spacer;
+  color: $primary-color;
+  text-align: center; // Centrado por defecto para las secciones
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: $spacer * 1.5;
+  text-align: center; // Centrado por defecto para las secciones
+}
+
+.btn {
+  display: inline-block; // Para poder aplicar padding horizontal
+  background: $primary-color;
+  color: $white;
+  padding: 1rem 2.5rem; // Aumentado el padding para hacerlo más grande
+  font-size: 1.1rem; // Aumentado el tamaño de la fuente
+  text-decoration: none;
+  border-radius: 30px; // Bordes redondeados como en el contacto
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s; // Añadida transición para la sombra
+  font-weight: bold;
+  text-transform: uppercase; // Añadido para consistencia con el contacto
+  letter-spacing: 0.5px; // Un pequeño espaciado entre letras puede ayudar
+
+  &:hover {
+    background: $secondary-color;
+    transform: scale(1.08); // Un poco más de escala al hacer hover
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); // Sombra más pronunciada al hacer hover
+  }
+
+  &:active {
+    transform: scale(1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); // Añadida sombra al active como en el contacto
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 7px $primary-color; // Añadido focus como en el contacto
+  }
+}
+
+// 🧱 Estilos específicos del componente inicio
+
+// 🔹 Sección Hero
+.hero {
+  position: relative;
+  text-align: center;
+  color: $white; // Texto blanco sobre la imagen
+  overflow: hidden; // Para que la imagen no sobresalga si ajustamos la altura
+
+  .portada {
+    display: block; // Evita espacio extra debajo de la imagen
+    width: 100%;
+    min-height: 500px; // Aumentada la altura mínima para que ocupe más espacio vertical
+    max-height: 700px; // Límite máximo de altura
+    object-fit: cover;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.55); // Ligeramente más oscuro el overlay si lo prefieres
+    padding: $spacer * 4; // Aumentado el padding para más espacio alrededor del texto
+    border-radius: 10px; // Un poco más de redondeo
+    width: 85%; // Ancho más controlado
+    max-width: 960px; // Aumentado el máximo ancho para pantallas más grandes
+
+    h2 {
+      color: $white;
+      font-size: 3rem; // Título más grande en el hero
+      margin-bottom: $spacer * 0.75;
+      font-weight: 700; // Título en negrita
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); // Añadida una ligera sombra al texto
+    }
+
+    p {
+      color: $white;
+      font-size: 1.3rem; // Descripción un poco más grande
+      margin-bottom: $spacer * 1.5;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); // Añadida una ligera sombra al texto
+    }
+
+    .btn {
+      // El botón hereda los estilos generales de .btn
+    }
+  }
+}
+
+// 🔹 Sección About
+.about {
+  padding: $spacer * 4; // Aumentado el padding general de la sección
+  text-align: center;
+  background-color: $white; // Fondo blanco como en las secciones de contacto
+  border-radius: 12px; // Un poco más de redondeo
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); // Sutil sombra más pronunciada
+  margin-bottom: $spacer * 4; // Aumentado el margen inferior
+
+  h2 {
+    text-align: center; // Aseguramos que el título esté centrado
+    color: $primary-color; // Usando el color primario para destacar
+    margin-bottom: $spacer * 3; // Más espacio debajo del título
+    font-size: 2.5rem; // Título más grande
+    font-weight: 700; // Título en negrita
+  }
+
+  p {
+    max-width: 900px; // Un poco más de ancho para el texto
+    margin: 0 auto $spacer * 3; // Centrar el párrafo y más margen inferior
+    text-align: center; // Centrado para esta sección
+    font-size: 1.15rem; // Texto un poco más grande
+    line-height: 1.8; // Mejorando la legibilidad del texto más grande
+    padding: $spacer * 1.5; // Mantenemos el padding interno
+    border: none; // Eliminamos el borde
+    background-color: #fefefe; // Un fondo ligeramente diferente para que resalte un poco
+    border-radius: 8px; // Bordes redondeados para el fondo del texto
+  }
+
+  .btn {
+    // El botón hereda los estilos generales de .btn
+    background-color: $secondary-color; // Un color ligeramente diferente para que destaque más
+    font-size: 1.2rem; // Aumentando un poco el tamaño del texto del botón
+    padding: 1.2rem 3rem; // Aumentando el padding del botón
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Añadiendo una sombra al botón
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; // Añadiendo transición al color de fondo
+
+    &:hover {
+      background-color: color.adjust($secondary-color, $lightness: 10%); // Ligeramente más claro al hacer hover
+      transform: scale(1.1); // Un poco más de escala al hacer hover
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); // Sombra más pronunciada al hacer hover
+    }
+  }
+}
+
+// 🧩 Estilos para la sección de servicios (asumiendo que el componente app-servicios tiene su propio estilo)
+// Si necesitas estilos específicos aquí para la forma en que se integra app-servicios, los puedes añadir.
+// Por ejemplo, para dar márgenes:
+/*
+app-servicios {
+  display: block; // Asegura que ocupe el ancho completo
+  margin-top: $spacer * 4;
+  margin-bottom: $spacer * 4;
+}
+*/
+
+// 📱 Diseño responsivo (Media Queries)
+
+// Tablet
+@media (min-width: $breakpoint-tablet) {
+  .hero .overlay {
+    width: 70%;
+  }
+
+  .about p {
+    text-align: left; // Volvemos a la alineación izquierda en pantallas más grandes
+  }
+}
+
+// Desktop
+@media (min-width: $breakpoint-desktop) {
+  .hero .overlay {
+    width: 60%;
+  }
+
+  .about {
+    padding: $spacer * 5;
+  }
+}

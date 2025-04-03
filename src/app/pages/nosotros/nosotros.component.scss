@@ -1,0 +1,207 @@
+/* 🎯 Sección de Nosotros */
+.nosotros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 10%;
+    background-color: #fff;
+}
+
+.contenido {
+    width: 50%;
+}
+
+.contenido h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.contenido p {
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.imagen-nosotros {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.imagen-nosotros img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid #f5c518;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.imagen-nosotros img:hover {
+    transform: scale(1.05);
+    box-shadow: 8px 8px 20px rgba(159, 132, 21, 0.3);
+}
+
+/* 📸 Animación para la sección de Galería de Proyectos */
+.galeria {
+    text-align: center;
+    padding: 50px 10%;
+    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+    border-top: 5px solid #f5c518;
+}
+
+.galeria h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.galeria .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.galeria img {
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid #f5c518;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.galeria img:hover {
+    transform: scale(1.05);
+    box-shadow: 8px 8px 20px rgba(159, 132, 21, 0.3);
+}
+
+/* 📊 Sección de Estadísticas */
+.estadisticas {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f5c518;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.stat h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.stat p {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* 🌟 Sección de Valores */
+.valores {
+    text-align: center;
+    padding: 50px 10%;
+    background-color: #f8f8f8;
+}
+
+.valores h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+.valores .valores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.valor {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    border: 3px solid #f5c518;
+    transition: transform 0.3s ease-in-out;
+}
+
+.valor:hover {
+    transform: translateY(-5px);
+}
+
+.valor img {
+    width: 220px;
+    margin-bottom: 10px;
+}
+
+/* 🤝 Sección de Clientes con Convenios */
+.clientes-convenio {
+    text-align: center;
+    padding: 50px 5%;
+    background: #333;
+}
+
+.clientes-convenio h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.clientes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.cliente-card {
+    background: #421da8;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 15px rgba(7, 2, 83, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.cliente-card:hover {
+    transform: scale(1.05);
+}
+
+.cliente-card img {
+    width: 20%;
+    max-width: 80px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    margin: 30px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .nosotros {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .contenido, .imagen-nosotros {
+        width: 100%;
+    }
+
+    .imagen-nosotros img {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .estadisticas {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .galeria .grid, .valores .valores-grid {
+        grid-template-columns: 1fr;
+    }
+}
