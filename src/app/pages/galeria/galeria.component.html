@@ -14,7 +14,7 @@
             <button class="prev-button" (click)="prevImage()" *ngIf="section.images.length > 1">
                 <span class="arrow-left"></span> Anterior
             </button>
-            <img [src]="section.images[currentImageIndex]?.url" [alt]="section.images[currentImageIndex]?.alt">
+            <img [src]="section.images[currentImageIndex].url" [alt]="section.images[currentImageIndex].alt">
             <button class="next-button" (click)="nextImage()" *ngIf="section.images.length > 1">
                 Siguiente <span class="arrow-right"></span>
             </button>

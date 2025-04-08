@@ -1,0 +1,47 @@
+<div class="empleados-container">
+  <h2>Lista de Empleados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Nombre completo</th>
+        <th>Teléfono</th>
+        <th>Correo</th>
+        <th>Fecha ingreso</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let emp of empleados">
+        <tr>
+          <td>{{ emp.id }}</td>
+          <td>{{ emp.nombreCompleto }}</td>
+          <td>{{ emp.telefono }}</td>
+          <td>{{ emp.correo }}</td>
+          <td>{{ emp.fechaIngreso }}</td>
+          <td>{{ emp.estado }}</td>
+          <td>
+            <button (click)="toggleDetalles(emp.id)">
+              {{ mostrarDetallesId === emp.id ? 'Ocultar' : 'Ver más' }}
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="mostrarDetallesId === emp.id && empleadoDetalle">
+          <td colspan="7">
+            <div class="detalles">
+              <p><strong>Fecha de nacimiento:</strong> {{ empleadoDetalle.fechaNacimiento }}</p>
+              <p><strong>RFC:</strong> {{ empleadoDetalle.rfc }}</p>
+              <p><strong>NSS:</strong> {{ empleadoDetalle.nss }}</p>
+              <p><strong>Salario:</strong> ${{ empleadoDetalle.salario }}</p>
+              <p><strong>Antigüedad:</strong> {{ empleadoDetalle.antiguedad }} años</p>
+              <p *ngIf="empleadoDetalle.fechaBaja">
+                <strong>Fecha de baja:</strong> {{ empleadoDetalle.fechaBaja }}
+              </p>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
