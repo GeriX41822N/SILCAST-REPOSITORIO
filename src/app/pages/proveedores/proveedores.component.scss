@@ -1,0 +1,92 @@
+/* proveedores.component.scss */
+
+/* Contenedor principal de la página de proveedores */
+:host {
+    display: block; // Asegura que el componente ocupe su propio espacio
+    padding: 20px;
+    background-color: #f8f9fa; // Un fondo claro para la sección administrativa
+    color: #343a40; // Color de texto oscuro
+  
+    h2 {
+      color: #007bff; // Un color de título que destaque (ej: azul)
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e9ecef; // Línea bajo el título
+      padding-bottom: 10px;
+    }
+  
+    /* Estilos para la tabla de proveedores */
+    table {
+      width: 100%; // La tabla ocupa todo el ancho disponible
+      border-collapse: collapse; // Elimina el espacio entre bordes de celdas
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra suave para la tabla
+      background-color: #ffffff; // Fondo blanco para la tabla
+  
+      thead {
+        background-color: #e9ecef; // Fondo gris claro para el encabezado
+        color: #495057; // Color de texto oscuro para el encabezado
+        tr th {
+          padding: 12px 15px;
+          text-align: left;
+          font-weight: bold;
+          border-bottom: 1px solid #dee2e6; // Borde inferior en encabezados
+        }
+      }
+  
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #f2f2f2; // Fondo ligeramente gris para filas pares (cebreado)
+          }
+          &:hover {
+            background-color: #e2e6ea; // Fondo al pasar el ratón
+          }
+          td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #dee2e6; // Borde inferior en celdas
+            vertical-align: middle; // Alinea verticalmente el contenido de la celda
+          }
+        }
+      }
+  
+      /* Estilos para los botones dentro de la tabla */
+      td button {
+        margin-right: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: background-color 0.2s ease;
+  
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+  
+      /* Estilos específicos para botones de acción (puedes ajustarlos) */
+      td button:nth-child(1) { /* Por ejemplo, el botón Editar */
+        background-color: #ffc107; // Amarillo para editar
+        color: #212529;
+      }
+  
+      td button:nth-child(2) { /* Por ejemplo, el botón Eliminar */
+        background-color: #dc3545; // Rojo para eliminar
+        color: white;
+      }
+    }
+  
+    /* Estilos para mensajes de carga y error */
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+  
+    .alert-danger {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+  }

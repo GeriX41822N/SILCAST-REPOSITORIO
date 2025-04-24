@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+// Importa tus otros componentes aquí...
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
@@ -8,38 +9,41 @@ import { LoginComponent } from './pages/login/login.component'; // Usando el com
 import { AdminComponent } from './pages/admin/admin.component';
 import { EmpleadosListComponent } from './pages/empleados/empleados-list/empleados-list.component';
 
-import { authGuard } from './auth.guard'; // <-- Importa tu guard aquí
+import { authGuard } from './auth.guard'; // Importa tu guard
+
+// **Importa tu ProveedoresComponent**
+import { ProveedoresComponent } from './pages/proveedores/proveedores.component'; // <-- **Ajusta esta ruta si es necesario**
+
 
 export const routes: Routes = [
-  // Rutas Públicas (no requieren autenticación)
-  { path: '', component: InicioComponent }, // Página de inicio
-  { path: 'nosotros', component: NosotrosComponent }, // Página de nosotros
+  // Rutas Públicas
+  { path: '', component: InicioComponent },
+  { path: 'nosotros', component: NosotrosComponent },
   { path: 'servicios', component: ServiciosComponent },
   { path: 'galeria', component: GaleriaComponent },
   { path: 'contacto', component: ContactoComponent },
-  { path: 'login', component: LoginComponent }, // Login del administrador
+  { path: 'login', component: LoginComponent },
 
-  // --- Rutas Protegidas (requieren autenticación) ---
+  // --- Rutas Protegidas ---
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [authGuard] // <-- Aplica el guard a la ruta admin
+    canActivate: [authGuard] // Aplica el guard
   },
   {
     path: 'empleados',
     component: EmpleadosListComponent,
-    canActivate: [authGuard] // <-- Aplica el guard a la ruta empleados
+    canActivate: [authGuard] // Aplica el guard
   },
-  // Para la futura ruta de proveedores:
-  // {
-  //   path: 'proveedores',
-  //   loadComponent: () => import('./components/proveedores/proveedores.component').then(m => m.ProveedoresComponent),
-  //   canActivate: [authGuard] // <-- Aplica el guard también aquí 
-  // },
+  // **¡Añade la ruta para Proveedores aquí!**
+  {
+    path: 'proveedores', // URL: /proveedores
+    component: ProveedoresComponent, // Componente a cargar
+    canActivate: [authGuard] // ¡Protegida por el guard!
+  },
 
   // Aquí añadirías otras rutas protegidas
 
-  // Ruta comodín para cualquier otra URL no definida
-  // Se puede redirigir al login o a donde quieras
-  { path: '**', redirectTo: '', pathMatch: 'full' } // Redirige a inicio si la ruta no existe
+  // Ruta comodín
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
