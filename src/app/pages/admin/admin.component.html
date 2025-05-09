@@ -1,49 +1,39 @@
 <div class="admin-page">
-    <h1>Administración de la Base de Datos</h1>
 
-    <!-- Servicios Industriales -->
-    <section class="industrial-services">
-        <h2>Servicios Industriales</h2>
-        <div class="services-container">
-            <div class="card">
-                <h3>Soldadores</h3>
-                <button>Administrar Soldadores</button>
-            </div>
-            <div class="card">
-                <h3>Torneros</h3>
-                <button>Administrar Torneros</button>
-            </div>
-            <div class="card">
-                <h3>Servicios Electromecánicos</h3>
-                <button>Administrar Servicios Electromecánicos</button>
-            </div>
-        </div>
-    </section>
+  <header class="admin-header">
+    <h1>Panel de Administracion</h1>
+    <button (click)="logout()" class="logout-button">
+       <span class="material-icons">logout</span>
+       Cerrar Sesion
+    </button>
+  </header>
 
-    <!-- Servicios de Grúas -->
-    <section class="crane-services">
-        <h2>Servicios de Grúas</h2>
-        <div class="services-container">
-            <div class="card">
-                <h3>Grúas (20 a 50 toneladas)</h3>
-                <button>Administrar Grúas</button>
-            </div>
-            <div class="card">
-                <h3>Planas</h3>
-                <button>Administrar Planas</button>
-            </div>
-            <div class="card">
-                <h3>Tráiler</h3>
-                <button>Administrar Tráiler</button>
-            </div>
-            <div class="card">
-                <h3>Genies</h3>
-                <button>Administrar Genies</button>
-            </div>
-            <div class="card">
-                <h3>Montacargas</h3>
-                <button>Administrar Montacargas</button>
-            </div>
+  <main class="admin-content">
+    <h2>Secciones Disponibles</h2>
+
+    <div class="sections-grid">
+      <ng-container *ngFor="let item of navItems">
+        <div class="nav-card" *ngIf="authService.hasPermission(item.permission)">
+          <span class="material-icons section-icon">{{ item.icon }}</span>
+
+          <h3>{{ item.label }}</h3>
+
+          <button [routerLink]="[item.path]">{{ item.label }}</button>
         </div>
-    </section>
+      </ng-container>
+
+    </div>
+
+    <div *ngIf="navItems.length > 0 && !hasVisibleNavItems" class="no-permissions-message">
+      <p>No tienes permisos para acceder a ninguna seccion administrativa.</p>
+      <p>Si crees que esto es un error, contacta al administrador del sistema.</p>
+    </div>
+
+    <div *ngIf="navItems.length === 0" class="no-permissions-message">
+      <p>No hay secciones administrativas definidas.</p>
+      <p>Contacta al administrador del sistema para configurar el panel.</p>
+    </div>
+
+  </main>
+
 </div>

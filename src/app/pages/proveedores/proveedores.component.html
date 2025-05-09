@@ -1,6 +1,6 @@
 <h2>Lista de Proveedores</h2>
 
-<button class="btn btn-primary mb-3" (click)="showCreateForm()">Agregar Nuevo Proveedor</button>
+<button class="btn btn-primary mb-3" (click)="showCreateForm()" *ngIf="authService.hasPermission('create suppliers')">Agregar Nuevo Proveedor</button>
 
 <div class="card mb-4" *ngIf="showForm">
   <div class="card-header">
@@ -38,7 +38,9 @@
         <textarea class="form-control" id="notas" [(ngModel)]="nuevoProveedor.notas" name="notas"></textarea>
       </div>
 
-      <button type="submit" class="btn btn-success me-2">{{ isEditing ? 'Actualizar Proveedor' : 'Guardar Proveedor' }}</button>
+      <button type="submit" class="btn btn-success me-2" *ngIf="(!isEditing && authService.hasPermission('create suppliers')) || (isEditing && authService.hasPermission('edit suppliers'))">
+          {{ isEditing ? 'Actualizar Proveedor' : 'Guardar Proveedor' }}
+      </button>
       <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
     </form>
   </div>
@@ -46,7 +48,6 @@
 
 
 <div *ngIf="isLoading">Cargando proveedores...</div>
-
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
 <div *ngIf="!isLoading && !error && proveedores.length > 0">
@@ -61,7 +62,7 @@
           <th>Correo</th>
           <th>Dirección</th>
           <th>Notas</th>
-          <th>Acciones</th>
+          <th *ngIf="authService.hasPermission('edit suppliers') || authService.hasPermission('delete suppliers')">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -73,9 +74,9 @@
           <td>{{ proveedor.correo }}</td>
           <td>{{ proveedor.direccion }}</td>
           <td>{{ proveedor.notas }}</td>
-          <td>
-            <button class="btn btn-sm btn-warning me-2" (click)="editProveedor(proveedor)">Editar</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteProveedor(proveedor.id!)">Eliminar</button>
+          <td *ngIf="authService.hasPermission('edit suppliers') || authService.hasPermission('delete suppliers')">
+            <button class="btn btn-sm btn-warning me-2" (click)="editProveedor(proveedor)" *ngIf="authService.hasPermission('edit suppliers')">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteProveedor(proveedor.id!)" *ngIf="authService.hasPermission('delete suppliers')">Eliminar</button>
           </td>
         </tr>
       </tbody>

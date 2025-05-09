@@ -1,22 +1,27 @@
 import { Routes } from '@angular/router';
-// Importa tus otros componentes aquí...
+
+// ---------------- COMPONENTES PÚBLICOS ----------------
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { ServiciosComponent } from './pages/servicios/servicios.component';
 import { GaleriaComponent } from './pages/galeria/galeria.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
-import { LoginComponent } from './pages/login/login.component'; // Usando el componente en pages/login
+import { LoginComponent } from './pages/login/login.component';
+
+// ---------------- COMPONENTES ADMIN ----------------
 import { AdminComponent } from './pages/admin/admin.component';
 import { EmpleadosListComponent } from './pages/empleados/empleados-list/empleados-list.component';
+import { ProveedoresComponent } from './pages/proveedores/proveedores.component';
+import { UserManagementComponent } from './pages/user-management/user-management.component';
+import { MovimientosListComponent } from './pages/movimientos/movimientos-list/movimientos-list.component';
+import { GruaListComponent } from './pages/gruas/grua-list/grua-list.component';
+import { GruaFormComponent } from './pages/gruas/grua-form/grua-form.component';
 
-import { authGuard } from './auth.guard'; // Importa tu guard
-
-// **Importa tu ProveedoresComponent**
-import { ProveedoresComponent } from './pages/proveedores/proveedores.component'; // <-- **Ajusta esta ruta si es necesario**
-
+// ---------------- GUARD ----------------
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
-  // Rutas Públicas
+  // --------- RUTAS PÚBLICAS ---------
   { path: '', component: InicioComponent },
   { path: 'nosotros', component: NosotrosComponent },
   { path: 'servicios', component: ServiciosComponent },
@@ -24,26 +29,50 @@ export const routes: Routes = [
   { path: 'contacto', component: ContactoComponent },
   { path: 'login', component: LoginComponent },
 
-  // --- Rutas Protegidas ---
+  // --------- RUTA DE DASHBOARD ADMIN (Protegida) ---------
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [authGuard] // Aplica el guard
+    canActivate: [authGuard]
   },
+
+  // --------- SECCIONES ADMINISTRABLES (Protegidas) ---------
   {
     path: 'empleados',
     component: EmpleadosListComponent,
-    canActivate: [authGuard] // Aplica el guard
+    canActivate: [authGuard]
   },
-  // **¡Añade la ruta para Proveedores aquí!**
   {
-    path: 'proveedores', // URL: /proveedores
-    component: ProveedoresComponent, // Componente a cargar
-    canActivate: [authGuard] // ¡Protegida por el guard!
+    path: 'proveedores',
+    component: ProveedoresComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'user-management',
+    component: UserManagementComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'movimientos',
+    component: MovimientosListComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'gruas',
+    component: GruaListComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'gruas/new',
+    component: GruaFormComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'gruas/edit/:id',
+    component: GruaFormComponent,
+    canActivate: [authGuard]
   },
 
-  // Aquí añadirías otras rutas protegidas
-
-  // Ruta comodín
+  // --------- RUTA CATCH-ALL ---------
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

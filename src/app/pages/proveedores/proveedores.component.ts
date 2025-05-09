@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ProveedoresService, Proveedor } from '../../proveedores.service';
+import { AuthService } from '../../auth.service'; // <-- ¡Importa AuthService aquí!
+
 
 @Component({
   selector: 'app-proveedores',
@@ -35,11 +37,16 @@ export class ProveedoresComponent implements OnInit {
   isEditing: boolean = false; // True si estamos editando, false si creamos
 
   constructor(
-    private proveedoresService: ProveedoresService
+    private proveedoresService: ProveedoresService,
+    public authService: AuthService // <-- ¡Inyecta AuthService y hazlo público!
   ) { }
 
   ngOnInit(): void {
     console.log('ProveedoresComponent: Inicializando. Cargando proveedores...');
+    // La lógica para cargar proveedores ya está protegida en el backend.
+    // El frontend intentará cargarla siempre, y el backend responderá 403 si no hay permiso.
+    // Podríamos añadir una verificación aquí con hasPermission('view suppliers') si quisiéramos
+    // evitar la llamada al backend en el frontend, pero el backend es la fuente principal de seguridad.
     this.loadProveedores();
   }
 
@@ -55,7 +62,12 @@ export class ProveedoresComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('ProveedoresComponent: Error al cargar proveedores.', error);
-        this.error = 'Error al cargar los proveedores. Por favor, inténtalo de nuevo.';
+        // Podemos mostrar un mensaje más específico si el error es 403
+        if (error.status === 403) {
+            this.error = 'No tienes permiso para ver proveedores.';
+        } else {
+            this.error = 'Error al cargar los proveedores. Por favor, inténtalo de nuevo.';
+        }
         this.isLoading = false;
       }
     });
@@ -63,26 +75,32 @@ export class ProveedoresComponent implements OnInit {
 
   // Método para mostrar el formulario en modo creación
   showCreateForm(): void {
-    this.showForm = true;
-    this.isEditing = false;
-    // Limpiar el objeto para que sea uno nuevo
-    this.nuevoProveedor = { nombre: '', contacto: '', telefono: '', correo: '', direccion: '', notas: '' };
+    // Opcional: Añadir una verificación aquí también, aunque el botón estará oculto sin permiso
+    // if (this.authService.hasPermission('create suppliers')) {
+       this.showForm = true;
+       this.isEditing = false;
+       this.nuevoProveedor = { nombre: '', contacto: '', telefono: '', correo: '', direccion: '', notas: '' };
+    // } else {
+    //    alert('No tienes permiso para crear proveedores.');
+    // }
   }
 
   // Método llamado al hacer clic en "Editar" en la tabla
   editProveedor(proveedor: Proveedor): void {
-    this.showForm = true;
-    this.isEditing = true;
-    // Cargar los datos del proveedor a editar en el formulario
-    // Hacemos una copia para no modificar el objeto original en la tabla directamente
-    this.nuevoProveedor = { ...proveedor };
+     // Opcional: Añadir una verificación aquí también
+    // if (this.authService.hasPermission('edit suppliers')) {
+       this.showForm = true;
+       this.isEditing = true;
+       this.nuevoProveedor = { ...proveedor };
+    // } else {
+    //   alert('No tienes permiso para editar proveedores.');
+    // }
   }
 
   // Método llamado al hacer clic en "Cancelar"
   cancelEdit(): void {
     this.showForm = false;
     this.isEditing = false;
-    // Opcional: Limpiar el objeto nuevoProveedor también
     this.nuevoProveedor = { nombre: '', contacto: '', telefono: '', correo: '', direccion: '', notas: '' };
   }
 
@@ -90,7 +108,6 @@ export class ProveedoresComponent implements OnInit {
   saveProveedor(): void {
     console.log('Intentando guardar proveedor:', this.nuevoProveedor);
 
-     // Validar que al menos el nombre no esté vacío
     if (!this.nuevoProveedor.nombre) {
       alert('El nombre del proveedor es obligatorio.');
       return;
@@ -98,7 +115,11 @@ export class ProveedoresComponent implements OnInit {
 
     if (this.isEditing) {
       // Lógica para Actualizar
-      // Asegúrate de que el ID existe si estás editando
+      // Opcional: Añadir verificación aquí también
+      // if (!this.authService.hasPermission('edit suppliers')) {
+      //     alert('No tienes permiso para editar proveedores.');
+      //     return;
+      // }
       if (this.nuevoProveedor.id === undefined) {
            console.error('Error: Intentando actualizar sin ID de proveedor.');
            alert('Ocurrió un error al intentar actualizar. Faltan datos del proveedor.');
@@ -109,13 +130,14 @@ export class ProveedoresComponent implements OnInit {
         next: (response: Proveedor) => {
           console.log('Proveedor actualizado exitosamente:', response);
           alert('Proveedor actualizado con éxito!');
-          this.cancelEdit(); // Cerrar formulario y resetear estado
-          this.loadProveedores(); // Recargar la lista
+          this.cancelEdit();
+          this.loadProveedores();
         },
         error: (error: any) => {
           console.error('Error al actualizar proveedor:', error);
-          // Manejar errores de validación o de servidor
-          if (error.status === 422 && error.error && error.error.errors) {
+          if (error.status === 403) { // Manejar 403 específicamente
+               alert('No tienes permiso para editar proveedores.');
+          } else if (error.status === 422 && error.error && error.error.errors) {
               let validationErrors = '';
               for (const field in error.error.errors) {
                   validationErrors += `${field}: ${error.error.errors[field].join(', ')}\n`;
@@ -128,17 +150,24 @@ export class ProveedoresComponent implements OnInit {
       });
 
     } else {
-      // Lógica para Crear (la que ya teníamos)
+      // Lógica para Crear
+      // Opcional: Añadir verificación aquí también
+      // if (!this.authService.hasPermission('create suppliers')) {
+      //     alert('No tienes permiso para crear proveedores.');
+      //     return;
+      // }
        this.proveedoresService.createProveedor(this.nuevoProveedor).subscribe({
         next: (response: Proveedor) => {
           console.log('Proveedor creado exitosamente:', response);
           alert('Proveedor creado con éxito!');
-          this.cancelEdit(); // Cerrar formulario y resetear estado
-          this.loadProveedores(); // Recargar la lista
+          this.cancelEdit();
+          this.loadProveedores();
         },
         error: (error: any) => {
           console.error('Error al crear proveedor:', error);
-           if (error.status === 422 && error.error && error.error.errors) {
+          if (error.status === 403) { // Manejar 403 específicamente
+              alert('No tienes permiso para crear proveedores.');
+          } else if (error.status === 422 && error.error && error.error.errors) {
               let validationErrors = '';
               for (const field in error.error.errors) {
                   validationErrors += `${field}: ${error.error.errors[field].join(', ')}\n`;
@@ -154,24 +183,31 @@ export class ProveedoresComponent implements OnInit {
 
   // ----------- Método para eliminar proveedor -----------
   deleteProveedor(id: number): void {
-    // Pedir confirmación antes de eliminar
+    // Opcional: Añadir verificación aquí también
+     // if (!this.authService.hasPermission('delete suppliers')) {
+     //     alert('No tienes permiso para eliminar proveedores.');
+     //     return;
+     // }
+
     if (confirm('¿Estás seguro de que deseas eliminar este proveedor? Esta acción no se puede deshacer.')) {
       console.log('Intentando eliminar proveedor con ID:', id);
 
       this.proveedoresService.deleteProveedor(id).subscribe({
-        next: (response: any) => { // La respuesta puede variar (ej: { message: 'Proveedor eliminado' })
+        next: (response: any) => {
           console.log('Proveedor eliminado exitosamente:', response);
           alert('Proveedor eliminado con éxito!');
-          this.loadProveedores(); // Recargar la lista para reflejar la eliminación
-           // Si el proveedor que estamos editando es el que se eliminó, cerrar el formulario de edición
-          if (this.isEditing && this.nuevoProveedor.id === id) {
+          this.loadProveedores();
+           if (this.isEditing && this.nuevoProveedor.id === id) {
               this.cancelEdit();
           }
         },
         error: (error: any) => {
           console.error('Error al eliminar proveedor:', error);
-          // Manejar posibles errores (ej: proveedor no encontrado, o tiene relaciones)
-          alert('Ocurrió un error al eliminar el proveedor. Por favor, inténtalo de nuevo.');
+           if (error.status === 403) { // Manejar 403 específicamente
+              alert('No tienes permiso para eliminar proveedores.');
+           } else {
+              alert('Ocurrió un error al eliminar el proveedor. Por favor, inténtalo de nuevo.');
+           }
         }
       });
     } else {
@@ -179,6 +215,4 @@ export class ProveedoresComponent implements OnInit {
     }
   }
 
-
-  // Puedes añadir aquí métodos adicionales si los necesitas
 }

@@ -1,0 +1,138 @@
+// src/app/pages/gruas/grua-form/grua-form.component.scss
+
+// Importa el m\u00F3dulo de color de Sass
+@use "sass:color";
+
+// Importa tus variables si las tienes en un archivo separado
+// @import 'path/to/your/_variables.scss';
+
+// Si no tienes variables globales, define aqu\u00ED los colores principales que usar\u00E1s
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$dark-color: #343a40;
+$border-color: #dee2e6;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+
+
+.container-fluid {
+  padding: 2rem 1rem; // Mayor padding
+  background-color: #fff; // Fondo blanco
+  border-radius: 8px; // Bordes redondeados
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); // Sombra sutil
+  max-width: 700px; // Limita el ancho m\u00E1ximo del formulario para mejor legibilidad
+  margin: 2rem auto; // Centra el contenedor en la p\u00E1gina
+}
+
+h2 {
+  color: $dark-color;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid $primary-color;
+  padding-bottom: 0.75rem;
+}
+
+
+.mb-3 {
+  margin-bottom: 1.5rem; // Espacio consistente entre grupos de formulario
+}
+
+.form-label {
+  font-weight: bold; // Etiquetas en negrita
+  color: $dark-color; // Color oscuro para etiquetas
+  margin-bottom: 0.5rem; // Espacio entre etiqueta y campo
+  display: block; // Asegura que la etiqueta est\u00E9 en su propia l\u00EDnea
+}
+
+.form-control, .form-select {
+  display: block; // Asegura que ocupen todo el ancho disponible
+  width: 100%; // Ocupan todo el ancho
+  padding: 0.75rem 1rem; // Espaciado interno
+  font-size: 1rem; // Tama\u00F1o de fuente est\u00E1ndar
+  line-height: 1.5;
+  color: $dark-color; // Color de texto
+  background-color: #fff; // Fondo blanco
+  background-clip: padding-box;
+  border: 1px solid $border-color; // Borde sutil
+  border-radius: 5px; // Bordes redondeados
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; // Transici\u00F3n al enfocar
+
+  &:focus {
+    // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+    border-color: color.adjust($primary-color, $lightness: 10%); // Borde m\u00E1s claro al enfocar
+    box-shadow: 0 0 0 0.25rem rgba($primary-color, 0.25); // Sombra al enfocar
+    outline: 0; // Elimina el outline por defecto del navegador
+  }
+}
+
+.form-select {
+    appearance: none; // Oculta la flecha por defecto del selector
+    // Puedes a\u00F1adir un icono de flecha personalizado con background-image si lo deseas
+    // background-image: url('data:image/svg+xml;...');
+    padding-right: 2rem; // Espacio a la derecha para el icono (si a\u00F1ades uno)
+}
+
+
+.form-text {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: $secondary-color; // Texto de ayuda en color secundario
+}
+
+.btn {
+  padding: 0.75rem 1.25rem; // Padding consistente para botones
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.2s ease; // Transici\u00F3n para hover/active
+
+  &:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+  }
+  &:active {
+      transform: translateY(0);
+  }
+
+  &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none; // Sin animaci\u00F3n al estar deshabilitado
+  }
+}
+
+.btn-success {
+    background-color: $success-color;
+    border-color: $success-color;
+    color: #fff;
+     &:hover {
+        // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+        background-color: color.adjust($success-color, $lightness: -8%); // Un poco m\u00E1s oscuro
+        border-color: color.adjust($success-color, $lightness: -10%); // Un poco m\u00E1s oscuro
+    }
+}
+
+.btn-secondary {
+    background-color: $secondary-color;
+    border-color: $secondary-color;
+    color: #fff;
+     &:hover {
+        // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+        background-color: color.adjust($secondary-color, $lightness: -8%); // Un poco m\u00E1s oscuro
+        border-color: color.adjust($secondary-color, $lightness: -10%); // Un poco m\u00E1s oscuro
+    }
+}
+
+// Estilos para mensajes de error/carga dentro del formulario
+.alert {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.text-danger {
+    color: $danger-color; // Color rojo para mensajes de error de validaci\u00F3n
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block; // Asegura que el mensaje est\u00E9 debajo del campo
+}

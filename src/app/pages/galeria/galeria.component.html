@@ -1,35 +1,27 @@
 <div class="gallery-container">
-  <section class="gallery-section" *ngFor="let section of galleryData">
-      <h2>{{ section.title }}</h2>
-      <p>{{ section.description }}</p>
-      <div class="image-grid">
-          <div class="image-item" *ngFor="let image of section.images; let i = index" (click)="openCarousel(section.key, i)">
-              <img [src]="image.url" [alt]="image.alt">
-          </div>
-      </div>
-
-      <div class="carousel-overlay" *ngIf="selectedSection === section.key && showCarousel">
-        <div class="carousel-modal">
-            <button class="close-button" (click)="closeCarousel()">X</button>
-            <button class="prev-button" (click)="prevImage()" *ngIf="section.images.length > 1">
-                <span class="arrow-left"></span> Anterior
-            </button>
-            <img [src]="section.images[currentImageIndex].url" [alt]="section.images[currentImageIndex].alt">
-            <button class="next-button" (click)="nextImage()" *ngIf="section.images.length > 1">
-                Siguiente <span class="arrow-right"></span>
-            </button>
+    <section class="gallery-section" *ngFor="let section of galleryData">
+        <h2>{{ section.title }}</h2>
+        <p>{{ section.description }}</p>
+        <div class="image-grid">
+            <div class="image-item" *ngFor="let image of section.images; let i = index" (click)="openCarousel(section.key, i)">
+                <img [src]="image.url" [alt]="image.alt">
+            </div>
         </div>
+  
+        <div class="carousel-overlay" *ngIf="selectedSection === section.key && showCarousel">
+          <div class="carousel-modal">
+              <button class="close-button" (click)="closeCarousel()">X</button>
+              <button class="prev-button" (click)="prevImage()" *ngIf="section.images.length > 1">
+                  <span class="arrow-left"></span> Anterior
+              </button>
+              <img [src]="section.images[currentImageIndex].url" [alt]="section.images[currentImageIndex].alt">
+              <button class="next-button" (click)="nextImage()" *ngIf="section.images.length > 1">
+                  Siguiente <span class="arrow-right"></span>
+              </button>
+          </div>
+        </div>
+  
+    </section>
+  
     </div>
-
-  </section>
-
-  <section class="admin-section">
-      <h2>Administración de Galería</h2>
-      <div *ngFor="let section of galleryData">
-          <h3>{{ section.title }}</h3>
-          <input type="file" multiple (change)="uploadImages($event, section.key)">
-          <p>Selecciona imágenes para agregar a la sección de {{ section.title }}.</p>
-      </div>
-      <button (click)="saveGalleryData()">Guardar Cambios</button>
-  </section>
-</div>
+  

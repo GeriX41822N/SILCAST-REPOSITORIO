@@ -1,4 +1,4 @@
-/* Estilos para el componente de Gestión de Empleados */
+/* Estilos para el componente de Gestión de Usuarios */
 
 /* Contenedor principal de la página */
 :host {
@@ -13,14 +13,6 @@ h2 {
   margin-bottom: 1.5rem; /* Espacio debajo del título */
   border-bottom: 2px solid #007bff; /* Línea decorativa debajo del título */
   padding-bottom: 0.5rem; /* Espacio entre el título y la línea */
-}
-
-h4 {
-    color: #495057; /* Color oscuro para subtítulos */
-    margin-top: 1.5rem; /* Espacio encima de subtítulos */
-    margin-bottom: 1rem; /* Espacio debajo de subtítulos */
-    border-bottom: 1px dashed #ced4da; /* Línea punteada decorativa */
-    padding-bottom: 0.5rem;
 }
 
 /* Estilo para el botón de agregar */
@@ -86,15 +78,9 @@ h4 {
   margin-bottom: 0.5rem; /* Espacio debajo de cada checkbox si se apilan */
 }
 
-
 .form-check-input {
-  margin-top: 0.3rem; /* Ajusta la posición vertical del checkbox */
-  cursor: pointer; /* Indica que es clickeable */
+   /* Estilos por defecto del navegador, o puedes personalizarlos */
 }
-.form-check-input:disabled {
-  cursor: not-allowed; /* Cambia el cursor si el checkbox está deshabilitado */
-  opacity: 0.65; /* Reduce la opacidad para indicar que está deshabilitado */
-} 
 
 .form-check-label {
    cursor: pointer; /* Indica que es clickeable */
@@ -200,7 +186,7 @@ h4 {
   border-color: #ffeeba;
 }
 
-/* Estilo para el mensaje "No hay empleados registrados" */
+/* Estilo para el mensaje "No hay usuarios registrados" */
 .no-users-message {
   margin-top: 1rem;
   font-style: italic;
@@ -225,14 +211,3 @@ h4 {
       padding: 0.5rem;
   }
 }
-
-/* Corregir ruleset vacío si existe */
-/* Basado en el error, podría ser un bloque como este: */
-/* .form-check-input {
-   // Estilos por defecto del navegador, o puedes personalizarlos
-   // Si no hay nada aquí, el linter marca el error
-} */
-/* Si no quieres añadir estilos, puedes simplemente eliminar el bloque vacío o comentarlo */
-// .form-check-input {
-// }
-

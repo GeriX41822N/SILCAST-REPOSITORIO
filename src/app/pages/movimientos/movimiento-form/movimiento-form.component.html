@@ -1,0 +1,101 @@
+<div class="container mt-4">
+    <h3>{{ isEditing ? 'Editar Registro de Movimiento' : 'Registrar Nuevo Movimiento' }}</h3>
+  
+    <div *ngIf="isLoading" class="alert alert-info">Cargando datos...</div>
+  
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+    <div *ngIf="!isLoading || error">
+      <form (ngSubmit)="saveMovimiento()">
+  
+        <div class="mb-3" *ngIf="isEditing">
+          <label for="movimientoId" class="form-label">ID:</label>
+          <input type="text" class="form-control" id="movimientoId" [(ngModel)]="currentMovimiento.id" name="id" disabled>
+        </div>
+  
+        <div class="mb-3">
+          <label for="grua" class="form-label">Grúa:</label>
+          <select class="form-select" id="grua" [(ngModel)]="currentMovimiento.grua_id" name="grua_id" required>
+            <option [value]="0" disabled>Seleccione una grúa</option>
+            <option *ngFor="let grua of gruas" [value]="grua.id">{{ grua.display_name }}</option>
+          </select>
+          <div *ngIf="currentMovimiento.grua_id === 0 && isSaving" class="text-danger">Debe seleccionar una Grúa.</div>
+        </div>
+  
+        <div class="mb-3">
+          <label for="empleado" class="form-label">Empleado (Operador):</label>
+          <select class="form-select" id="empleado" [(ngModel)]="currentMovimiento.empleado_id" name="empleado_id" required>
+            <option [value]="0" disabled>Seleccione un empleado</option>
+            <option *ngFor="let empleado of empleados" [value]="empleado.id">{{ empleado.display_name }}</option>
+          </select>
+           <div *ngIf="currentMovimiento.empleado_id === 0 && isSaving" class="text-danger">Debe seleccionar un Empleado (Operador).</div>
+        </div>
+  
+        <div class="mb-3">
+          <label for="tipoMovimiento" class="form-label">Tipo de Movimiento:</label>
+          <select class="form-select" id="tipoMovimiento" [(ngModel)]="currentMovimiento.tipo_movimiento" name="tipo_movimiento" required>
+            <option value="entrada">Entrada</option>
+            <option value="salida">Salida</option>
+          </select>
+        </div>
+  
+        <div class="mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'entrada'">
+          <label for="fechaHoraEntrada" class="form-label">Fecha y Hora de Entrada:</label>
+          <input type="datetime-local" class="form-control" id="fechaHoraEntrada" [(ngModel)]="currentMovimiento.fecha_hora_entrada" name="fecha_hora_entrada" required>
+           <div *ngIf="!currentMovimiento.fecha_hora_entrada && isSaving" class="text-danger">Debe ingresar la Fecha y Hora de Entrada.</div>
+        </div>
+  
+        <div class="mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'salida'">
+          <label for="fechaHoraSalida" class="form-label">Fecha y Hora de Salida:</label>
+          <input type="datetime-local" class="form-control" id="fechaHoraSalida" [(ngModel)]="currentMovimiento.fecha_hora_salida" name="fecha_hora_salida" required>
+           <div *ngIf="!currentMovimiento.fecha_hora_salida && isSaving" class="text-danger">Debe ingresar la Fecha y Hora de Salida.</div>
+        </div>
+  
+        <div class="mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'salida'">
+          <label for="destino" class="form-label">Destino:</label>
+          <input type="text" class="form-control" id="destino" [(ngModel)]="currentMovimiento.destino" name="destino" required>
+           <div *ngIf="currentMovimiento.tipo_movimiento === 'salida' && !currentMovimiento.destino?.trim() && isSaving" class="text-danger">Debe ingresar el Destino para un movimiento de salida.</div>
+        </div>
+  
+  
+        <div class="row">
+             <div class="col-md-6 mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'entrada'">
+                  <label for="kilometrajeEntrada" class="form-label">Kilometraje de Entrada:</label>
+                  <input type="number" class="form-control" id="kilometrajeEntrada" [(ngModel)]="currentMovimiento.kilometraje_entrada" name="kilometraje_entrada" required>
+                   <div *ngIf="currentMovimiento.tipo_movimiento === 'entrada' && (currentMovimiento.kilometraje_entrada === null || currentMovimiento.kilometraje_entrada === undefined) && isSaving" class="text-danger">Debe ingresar el Kilometraje de Entrada.</div>
+             </div>
+             <div class="col-md-6 mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'salida'">
+                  <label for="kilometrajeSalida" class="form-label">Kilometraje de Salida:</label>
+                  <input type="number" class="form-control" id="kilometrajeSalida" [(ngModel)]="currentMovimiento.kilometraje_salida" name="kilometraje_salida" required>
+                   <div *ngIf="currentMovimiento.tipo_movimiento === 'salida' && (currentMovimiento.kilometraje_salida === null || currentMovimiento.kilometraje_salida === undefined) && isSaving" class="text-danger">Debe ingresar el Kilometraje de Salida.</div>
+             </div>
+         </div>
+  
+  
+        <div class="row">
+             <div class="col-md-6 mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'entrada'">
+                  <label for="combustibleEntrada" class="form-label">Combustible de Entrada (%):</label>
+                  <input type="number" class="form-control" id="combustibleEntrada" [(ngModel)]="currentMovimiento.combustible_entrada" name="combustible_entrada" min="0" max="100">
+             </div>
+             <div class="col-md-6 mb-3" *ngIf="currentMovimiento.tipo_movimiento === 'salida'">
+                  <label for="combustibleSalida" class="form-label">Combustible de Salida (%):</label>
+                  <input type="number" class="form-control" id="combustibleSalida" [(ngModel)]="currentMovimiento.combustible_salida" name="combustible_salida" min="0" max="100">
+             </div>
+         </div>
+  
+  
+        <div class="mb-3">
+          <label for="observaciones" class="form-label">Observaciones:</label>
+          <textarea class="form-control" id="observaciones" [(ngModel)]="currentMovimiento.observaciones" name="observaciones" rows="3"></textarea>
+        </div>
+  
+        <button type="submit" class="btn btn-success me-2" [disabled]="isSaving">
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{ isSaving ? 'Guardando...' : (isEditing ? 'Actualizar' : 'Guardar') }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="isSaving">Cancelar</button>
+  
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,207 @@
+// src/app/pages/gruas/grua-list/grua-list.component.scss
+
+// Importa el m\u00F3dulo de color de Sass
+@use "sass:color";
+
+// Importa tus variables si las tienes en un archivo separado
+// @import 'path/to/your/_variables.scss';
+
+// Si no tienes variables globales, define aqu\u00ED los colores principales que usar\u00E1s
+$primary-color: #007bff;
+$dark-color: #343a40;
+$border-color: #dee2e6;
+$light-color: #f8f9fa;
+$text-color: #212529;
+$warning-color: #ffc107;
+$danger-color: #dc3545;
+$info-color: #17a2b8;
+$success-color: #28a745;
+
+
+.container-fluid {
+  padding: 2rem 1rem; // Mayor padding para mejor espaciado
+  background-color: #fff; // Fondo blanco para el contenedor principal
+  border-radius: 8px; // Bordes redondeados
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); // Sombra sutil para efecto de "tarjeta"
+}
+
+h2 {
+  color: $dark-color; // T\u00EDtulo con color oscuro
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid $primary-color; // L\u00EDnea debajo del t\u00EDtulo con color primario
+  padding-bottom: 0.75rem; // M\u00E1s espacio debajo del t\u00EDtulo
+}
+
+.btn-primary {
+  background-color: $primary-color; // Fondo con color primario
+  border-color: $primary-color; // Borde con color primario
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease; // Transici\u00F3n suave al pasar el mouse
+
+  &:hover {
+    // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+    background-color: color.adjust($primary-color, $lightness: -10%); // Un poco m\u00E1s oscuro al pasar el mouse
+    border-color: color.adjust($primary-color, $lightness: -12%);
+  }
+}
+
+// Estilos para los mensajes de estado
+.alert {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+}
+.alert-info {
+    // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+    background-color: color.adjust($info-color, $lightness: 40%);
+    color: color.adjust($info-color, $lightness: -20%);
+    border-color: color.adjust($info-color, $lightness: 20%);
+}
+.alert-danger {
+    // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+    background-color: color.adjust($danger-color, $lightness: 40%);
+    color: color.adjust($danger-color, $lightness: -20%);
+    border-color: color.adjust($danger-color, $lightness: 20%);
+}
+.alert-warning {
+    // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+    background-color: color.adjust($warning-color, $lightness: 40%);
+    color: color.adjust($warning-color, $lightness: -20%);
+    border-color: color.adjust($warning-color, $lightness: 20%);
+}
+
+
+// Estilos para la tabla de gr\u00FAas
+.table-responsive {
+  margin-top: 1.5rem;
+}
+
+.table {
+  width: 100%; // Asegura que la tabla ocupe todo el ancho disponible
+  border-collapse: collapse; // Elimina el espacio entre bordes de celda
+
+  thead {
+    th {
+      background-color: $light-color; // Fondo claro
+      color: $text-color; // Texto oscuro
+      border-bottom: 2px solid $border-color; // Borde sutil
+      padding: 1rem 0.75rem; // Espaciado interno
+      vertical-align: middle;
+      font-weight: bold; // Texto en negrita
+      text-align: left; // Alinea texto a la izquierda
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $border-color; // Separador entre filas
+
+      &:last-child {
+        border-bottom: none; // No hay borde en la \u00FAltima fila
+      }
+
+      td {
+        padding: 1rem 0.75rem; // Espaciado interno
+        vertical-align: middle;
+        color: $text-color; // Color de texto general
+
+        // Estilo para columnas espec\u00EDficas si quieres
+        // &.column-id { width: 50px; font-weight: bold; }
+      }
+
+      // Efecto hover en la fila
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #f1f1f1; // Fondo m\u00E1s claro al pasar el mouse
+      }
+    }
+  }
+}
+
+// Estilos para los botones de acci\u00F3n dentro de la tabla
+.btn-sm {
+  padding: 0.3rem 0.6rem; // Ligeramente m\u00E1s grandes
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 4px; // Bordes redondeados
+  transition: opacity 0.3s ease, transform 0.2s ease; // Transici\u00F3n para hover/active
+
+  &:hover {
+      opacity: 0.9; // Ligeramente transparente
+      transform: translateY(-1px); // Se mueve un poco hacia arriba
+  }
+  &:active {
+      transform: translateY(0); // Vuelve a su posici\u00F3n original al hacer clic
+  }
+
+  &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none; // Sin animaci\u00F3n al estar deshabilitado
+  }
+}
+
+.btn-warning {
+    background-color: $warning-color;
+    border-color: $warning-color;
+    color: $text-color; // Texto oscuro para botones amarillos
+    &:hover {
+        // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+        background-color: color.adjust($warning-color, $lightness: -8%);
+        border-color: color.adjust($warning-color, $lightness: -10%);
+    }
+}
+
+.btn-danger {
+    background-color: $danger-color;
+    border-color: $danger-color;
+    color: #fff; // Texto blanco para botones rojos
+     &:hover {
+        // \u00a1CORRECCI\u00d3N!: Usar color.adjust
+        background-color: color.adjust($danger-color, $lightness: -8%);
+        border-color: color.adjust($danger-color, $lightness: -10%);
+    }
+}
+
+
+// Responsividad b\u00E1sica (estilo para pantallas peque\u00F1as)
+// Convierte la tabla a un estilo de tarjeta para mejor visualizaci\u00F3n en m\u00F3viles
+@media (max-width: 768px) {
+  .table {
+    thead {
+      display: none; // Oculta el encabezado original
+    }
+
+    tbody {
+      tr {
+        display: block; // Cada fila se convierte en un bloque (tipo tarjeta)
+        margin-bottom: 1rem; // Espacio entre "tarjetas" de fila
+        border: 1px solid $border-color; // Borde alrededor de cada tarjeta
+        border-radius: 5px; // Bordes redondeados
+        padding: 0.8rem; // Padding dentro de la tarjeta
+        background-color: #fff; // Fondo blanco
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03); // Sombra sutil
+      }
+
+      td {
+        display: flex; // Usa flexbox para alinear etiqueta y valor en m\u00F3viles
+        justify-content: space-between; // Etiqueta a la izquierda, valor a la derecha
+        padding: 0.5rem 0; // Padding vertical
+        border-bottom: 1px solid #eee; // Separador entre celdas en vista m\u00F3vil
+
+        &:last-child {
+          border-bottom: none; // No hay separador en la \u00FAltima celda
+          justify-content: center; // Centra los botones de acci\u00F3n
+          padding-top: 1rem;
+        }
+
+        &::before {
+          content: attr(data-label); // Muestra la etiqueta usando el atributo data-label
+          font-weight: bold;
+          margin-right: 1rem; // Espacio entre etiqueta y valor
+          color: $dark-color; // Color para la etiqueta
+        }
+      }
+    }
+  }
+}

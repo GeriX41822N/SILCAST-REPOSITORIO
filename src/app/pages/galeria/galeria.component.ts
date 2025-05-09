@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { CommonModule } from '@angular/common';
 
 interface ImageData {
   url: string;
@@ -15,21 +15,30 @@ interface GallerySection {
 
 @Component({
   selector: 'app-galeria',
+  standalone: true, // Asegúrate de que sea standalone si tu proyecto lo requiere
+  imports: [
+    CommonModule,
+    // FormsModule // Ya no es necesario
+  ],
   templateUrl: './galeria.component.html',
-  styleUrls: ['./galeria.component.scss'],
-  imports: [CommonModule] // Agrega CommonModule al array de imports
+  styleUrls: ['./galeria.component.scss']
 })
 export class GaleriaComponent implements OnInit {
-  galleryData: GallerySection[] = [];
-  showCarousel = false;
-  selectedSection: string | null = null;
-  currentImageIndex = 0;
+  galleryData: GallerySection[] = []; // Lista de secciones de galería con imágenes
+  showCarousel = false; // Controla la visibilidad del carrusel
+  selectedSection: string | null = null; // Clave de la sección seleccionada para el carrusel
+  currentImageIndex = 0; // Índice de la imagen actual en el carrusel
+
+  // constructor(private authService: AuthService) {}
+   constructor() {} // Constructor simple
 
   ngOnInit(): void {
+    // Cargar los datos de la galería al inicializar el componente
     this.loadGalleryData();
-    this.loadSavedGalleryData(); // Intentar cargar datos guardados
+    // Eliminamos loadSavedGalleryData() ya que no usaremos localStorage para la carga
   }
 
+  // Carga los datos de la galería (imágenes hardcodeadas por ahora)
   loadGalleryData(): void {
     this.galleryData = [
       {
@@ -65,62 +74,41 @@ export class GaleriaComponent implements OnInit {
     ];
   }
 
-  loadSavedGalleryData(): void {
-    const savedData = localStorage.getItem('galleryData');
-    if (savedData) {
-      this.galleryData = JSON.parse(savedData);
-    }
-  }
 
-  saveGalleryData(): void {
-    localStorage.setItem('galleryData', JSON.stringify(this.galleryData));
-  }
-
+  // Abre el carrusel en una sección y con una imagen específica
   openCarousel(sectionKey: string, index: number): void {
     this.selectedSection = sectionKey;
     this.currentImageIndex = index;
     this.showCarousel = true;
   }
 
+  // Cierra el carrusel
   closeCarousel(): void {
     this.showCarousel = false;
     this.selectedSection = null;
     this.currentImageIndex = 0;
   }
 
+  // Muestra la siguiente imagen en el carrusel
   nextImage(): void {
     if (!this.selectedSection) return;
     const section = this.galleryData.find(s => s.key === this.selectedSection);
     if (section && this.currentImageIndex < section.images.length - 1) {
       this.currentImageIndex++;
     } else if (section && this.currentImageIndex === section.images.length - 1) {
-      this.currentImageIndex = 0; // Volver a la primera imagen
+      this.currentImageIndex = 0; // Volver a la primera imagen al llegar al final
     }
   }
 
+  // Muestra la imagen anterior en el carrusel
   prevImage(): void {
     if (!this.selectedSection) return;
     const section = this.galleryData.find(s => s.key === this.selectedSection);
     if (section && this.currentImageIndex > 0) {
       this.currentImageIndex--;
     } else if (section && this.currentImageIndex === 0) {
-      this.currentImageIndex = section.images.length - 1; // Ir a la última imagen
+      this.currentImageIndex = section.images.length - 1; // Ir a la última imagen al llegar al inicio
     }
   }
 
-  uploadImages(event: any, sectionKey: string): void {
-    const files: FileList = event.target.files;
-    if (files && files.length > 0) {
-      const sectionIndex = this.galleryData.findIndex(s => s.key === sectionKey);
-      if (sectionIndex !== -1) {
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const imageUrl = `/assets/images/${sectionKey}/${file.name}`;
-          this.galleryData[sectionIndex].images.push({ url: imageUrl, alt: file.name });
-        }
-        this.saveGalleryData(); // Guardar los datos actualizados en localStorage
-        console.log('Imágenes agregadas:', this.galleryData);
-      }
-    }
-  }
 }
